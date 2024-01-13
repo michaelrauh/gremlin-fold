@@ -12,15 +12,6 @@ import static org.apache.tinkerpop.gremlin.process.traversal.AnonymousTraversalS
 
 public class Main {
     public static void main(String[] args) {
-        JanusGraph graph = JanusGraphFactory.open("janusgraph-local.conf");
-        GraphTraversalSource g = graph.traversal();
-        g.addV("here").property("foo", "bar").next();
-        System.out.println(g.V().toList());
-//        JanusGraphManagement mgmt = graph.openManagement();
-//        mgmt.printSchema();
-//        mgmt.commit();
-        graph.close();
-
 
     }
 }
