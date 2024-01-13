@@ -1,19 +1,25 @@
 package org.example
 
 import org.apache.tinkerpop.gremlin.process.traversal.AnonymousTraversalSource
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource
 import org.apache.tinkerpop.gremlin.structure.Graph
 import org.apache.tinkerpop.gremlin.structure.Vertex
 import org.apache.tinkerpop.gremlin.tinkergraph.structure.TinkerGraph
 
-class Database() {
-    private val graph: Graph = TinkerGraph.open()
-    private val g = AnonymousTraversalSource.traversal().withEmbedded(graph)
+abstract class Database() {
+    abstract fun initialize(): GraphTraversalSource
+    abstract fun start_transaction()
+    abstract fun commit_transaction()
+
+    val g by lazy { initialize() }
 
     fun addPair(first: String, second: String) {
+        start_transaction()
         val a: Vertex = g.addV("word").property("value", first).next()
         val b: Vertex = g.addV("word").property("value", second).next()
 
         g.addE("pair").from(a).to(b).next()
+        commit_transaction()
     }
 
     fun wordExists(word: String): Boolean {
