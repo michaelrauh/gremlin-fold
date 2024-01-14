@@ -6,6 +6,7 @@ import org.apache.tinkerpop.gremlin.process.traversal.P.eq
 import org.apache.tinkerpop.gremlin.process.traversal.P.neq
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal.Symbols.values
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource
+import org.apache.tinkerpop.gremlin.structure.Column
 import org.apache.tinkerpop.gremlin.structure.Vertex
 
 abstract class Database() {
@@ -35,15 +36,16 @@ abstract class Database() {
     }
 
     fun fromNothing() {
-//        g.V().hasLabel("word").`as`("a").out("pair").`as`("b").out("pair").`as`("d").`in`("pair").`as`("c").`in`("pair")
-//            .`as`("a_prime").where("a", eq("a_prime")).where("b", neq("c")).select<Vertex>("a", "b", "c", "d")
-//            .by("value").dedup()
-//            .by(select<String, String>("b", "c").select<String>(values).local(unfold<Iterable<Any>>().order().fold()))
-//            .addV("ortho").`as`("o").addE("hasWord").from("o").to("a").addE("hasWord").from("o").to("b").addE("hasWord")
-//            .from("o").to("c").addE("hasWord").from("o").to("d").iterate()
+        g.V().hasLabel("word").`as`("a").out("pair").`as`("b").out("pair").`as`("d").`in`("pair").`as`("c").`in`("pair")
+            .`as`("a_prime").where("a", eq("a_prime")).where("b", neq("c")).select<Vertex>("a", "b", "c", "d")
+            .by("value").dedup()
+            .by(select<String, String>("b", "c").select<String>(Column.values).local(unfold<Iterable<Any>>().order().fold()))
+            .addV("ortho").`as`("o").addE("hasWord").from("o").to("a").addE("hasWord").from("o").to("b").addE("hasWord")
+            .from("o").to("c").addE("hasWord").from("o").to("d").iterate()
     }
 
-    fun countSquares() {
-        print(g.V().hasLabel("ortho").count().next())
+    fun countSquares(): Long {
+        val count = g.V().hasLabel("ortho").count().next()
+        return count
     }
 }
