@@ -12,7 +12,7 @@ class InMemoryTinkergraphDatabase : Database() {
         return g
     }
 
-    override fun start_transaction() {}
+    override fun startTransaction() {}
 
-    override fun commit_transaction() {}
+    override fun commitTransaction() {}
 }

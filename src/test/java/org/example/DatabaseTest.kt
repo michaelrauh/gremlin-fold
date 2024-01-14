@@ -12,11 +12,13 @@ class DatabaseTest {
 
     @Test
     fun databaseCreatesPairsAndEdgesWhenBothWordsAreNew() {
-        subject.addPair("a", "b")
+        subject.addPairs(listOf(Pair("a", "b"), Pair("a", "c")))
 
         assertTrue(subject.wordExists("a"))
         assertTrue(subject.wordExists("b"))
+        assertTrue(subject.wordExists("c"))
         assertTrue(subject.pairExists("a", "b"))
+        assertTrue(subject.pairExists("a", "c"))
     }
 }
 
@@ -27,8 +29,8 @@ class TameDatabase : Database() {
         return g
     }
 
-    override fun start_transaction() {}
+    override fun startTransaction() {}
 
-    override fun commit_transaction() {}
+    override fun commitTransaction() {}
 }
 

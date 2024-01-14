@@ -11,11 +11,11 @@ class InMemoryJanusgraphDatabase: Database() {
         return g
     }
 
-    override fun start_transaction() {
+    override fun startTransaction() {
         g.tx().open()
     }
 
-    override fun commit_transaction() {
+    override fun commitTransaction() {
         g.tx().commit()
     }
 
