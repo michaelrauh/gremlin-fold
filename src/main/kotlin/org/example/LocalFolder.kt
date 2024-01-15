@@ -5,7 +5,7 @@ import java.io.File
 class LocalFolder() {
     fun fold() {
         val textHandler = TextHandler(File("input.txt").toPath())
-        val db = InMemoryTinkergraphDatabase()
+        val db = InMemoryJanusgraphDatabase()
 
         Pairs(textHandler, db).go()
         FromNothing(db).go()
